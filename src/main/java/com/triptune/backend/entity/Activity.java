@@ -47,17 +47,48 @@ public class Activity {
     @Column(name = "duration_minutes", nullable = false)
     private Integer durationMinutes;
 
-    @NotNull(message = "Cost is required")
+    @Column
+    private Double latitude;
+
+    @Column
+    private Double longitude;
+
+    @NotNull(message = "Estimated cost is required")
+    @Column(name = "estimated_cost", nullable = false)
+    private Double estimatedCost;
+
+    @Column(name = "opening_time", length = 50)
+    private String openingTime;
+
+    @Column(name = "closing_time", length = 50)
+    private String closingTime;
+
+    @Size(max = 20, message = "Energy level must be at most 20 characters")
+    @Column(name = "energy_level", length = 20)
+    private String energyLevel;
+
     @Column(nullable = false)
-    private Double cost;
+    @Builder.Default
+    private Boolean indoor = false;
 
-    @Size(max = 50, message = "Opening hours must be at most 50 characters")
-    @Column(name = "opening_hours", length = 50)
-    private String openingHours;
+    @Column(name = "weather_dependent", nullable = false)
+    @Builder.Default
+    private Boolean weatherDependent = false;
 
-    @Size(max = 50, message = "Closing hours must be at most 50 characters")
-    @Column(name = "closing_hours", length = 50)
-    private String closingHours;
+    @Column(name = "booking_required", nullable = false)
+    @Builder.Default
+    private Boolean bookingRequired = false;
+
+    @Column
+    private Double rating;
+
+    @Size(max = 512, message = "Image URL must be at most 512 characters")
+    @Column(name = "image_url", length = 512)
+    private String imageUrl;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean active = true;
 
     @NotBlank(message = "Category is required")
     @Size(max = 50, message = "Category must be at most 50 characters")

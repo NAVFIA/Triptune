@@ -49,10 +49,35 @@ public class Destination {
     @Column(name = "image_url", length = 512)
     private String imageUrl;
 
-    @NotBlank(message = "Budget level is required")
-    @Size(max = 20, message = "Budget level must be at most 20 characters")
-    @Column(name = "budget_level", nullable = false, length = 20)
-    private String budgetLevel; // e.g. BUDGET, MID_RANGE, LUXURY
+    @Size(max = 100, message = "State must be at most 100 characters")
+    @Column(length = 100)
+    private String state;
+
+    @Column
+    private Double latitude;
+
+    @Column
+    private Double longitude;
+
+    @Column(name = "average_daily_cost")
+    private Double averageDailyCost;
+
+    @Column(name = "minimum_recommended_days")
+    private Integer minimumRecommendedDays;
+
+    @Column(name = "maximum_recommended_days")
+    private Integer maximumRecommendedDays;
+
+    @Column(name = "average_rating")
+    private Double averageRating;
+
+    @Size(max = 50, message = "Best season must be at most 50 characters")
+    @Column(name = "best_season", length = 50)
+    private String bestSeason;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean active = true;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
