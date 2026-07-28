@@ -1,112 +1,76 @@
-import React from 'react';
-import { Box, Typography, CardContent, Stack, Grid, Button } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, Button, Grid, Card, CardContent, CardActions, Chip, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { getTripsApi } from '../api/trip';
 import { PageHeader } from '../components/common/PageHeader';
-import { AppCard } from '../components/common/AppCard';
-import { StatusChip } from '../components/common/StatusChip';
-import { LoadingSkeleton } from '../components/common/LoadingSkeleton';
-import { ErrorState } from '../components/common/ErrorState';
-import { EmptyState } from '../components/common/EmptyState';
+import { getTripsApi } from '../api/trip';
+import type { Trip } from '../types/trip';
 
 export const MyTripsPage: React.FC = () => {
   const navigate = useNavigate();
+  const [trips, setTrips] = useState<Trip[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const {
-    data: tripsData,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ['trips', 'all'],
-    queryFn: () => getTripsApi(0, 20),
-  });
-
-  const trips = tripsData?.data?.content || [];
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        const data = await getTripsApi(0, 100);
+        setTrips(data.data.content);
+      } catch (error) {
+        console.error('Failed to fetch trips', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTrips();
+  }, []);
 
   return (
     <Box>
       <PageHeader
         title="My Trips"
-        subtitle="Manage and track all your created travel plans"
+        subtitle="Manage your upcoming and past trips"
         action={
-          <Button
-            variant="contained"
-            color="secondary"
-            startIcon={<AddIcon />}
-            onClick={() => navigate('/trips/create')}
-          >
-            Create Trip
+          <Button variant="contained" color="primary" onClick={() => navigate('/trips/create')}>
+            Plan New Trip
           </Button>
         }
       />
-
-      {isLoading && <LoadingSkeleton count={3} />}
-
-      {isError && (
-        <ErrorState
-          title="Unable to load trips"
-          message="Check backend status at http://localhost:8080"
-          onRetry={refetch}
-        />
-      )}
-
-      {!isLoading && !isError && trips.length === 0 && (
-        <EmptyState
-          title="No trips found"
-          description="You haven't created any travel plans yet."
-          actionText="Create New Trip"
-          onAction={() => navigate('/trips/create')}
-        />
-      )}
-
-      {!isLoading && !isError && trips.length > 0 && (
-        <Stack spacing={2.5}>
-          {trips.map((trip) => (
-            <AppCard key={trip.tripId}>
-              <CardContent sx={{ p: 3 }}>
-                <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={12} sm={8}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                      <Typography variant="h3" fontSize="1.25rem" fontWeight={700}>
-                        {trip.tripName}
-                      </Typography>
-                      <StatusChip status={trip.status} />
-                    </Box>
-
-                    <Stack direction="row" spacing={3} sx={{ color: 'text.secondary', mt: 1 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        <LocationOnOutlinedIcon fontSize="small" color="action" />
-                        <Typography variant="body2">Starting: {trip.startingLocation}</Typography>
-                      </Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        <CalendarMonthOutlinedIcon fontSize="small" color="action" />
-                        <Typography variant="body2">
-                          {trip.startDate} to {trip.endDate} ({trip.numberOfDays} days)
-                        </Typography>
-                      </Box>
-                    </Stack>
-                  </Grid>
-
-                  <Grid item xs={12} sm={4} sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
-                    {trip.perPersonBudget && (
-                      <Typography variant="subtitle1" fontWeight={700} color="primary.main">
-                        ${trip.perPersonBudget} / person
-                      </Typography>
-                    )}
-                    <Typography variant="body2" color="text.secondary">
-                      {trip.numberOfTravellers} Traveler{trip.numberOfTravellers > 1 ? 's' : ''}
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <CircularProgress />
+        </Box>
+      ) : trips.length === 0 ? (
+        <Box sx={{ textAlign: 'center', mt: 4 }}>
+          <Typography variant="h6" color="text.secondary">You haven't planned any trips yet.</Typography>
+        </Box>
+      ) : (
+        <Grid container spacing={3} sx={{ mt: 2 }}>
+          {trips.map(trip => (
+            <Grid size={{xs: 12, md: 6, lg: 4}}   key={trip.tripId}>
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography variant="h5" gutterBottom>{trip.tripName}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {trip.startDate} to {trip.endDate}
+                  </Typography>
+                  <Box sx={{ mt: 2, mb: 1 }}>
+                    <Chip label={trip.status} color="primary" size="small" />
+                  </Box>
+                  <Typography variant="body2">Budget: ${trip.totalBudget}</Typography>
+                  <Typography variant="body2">Traveller Type: {trip.travellerType}</Typography>
+                  {trip.selectedDestination && (
+                    <Typography variant="body2" sx={{ mt: 1, fontWeight: 'bold' }}>
+                      Destination: {trip.selectedDestination.name}
                     </Typography>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </AppCard>
+                  )}
+                </CardContent>
+                <CardActions>
+                  <Button size="small" onClick={() => navigate(`/trips/${trip.tripId}`)}>View Details</Button>
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
-        </Stack>
+        </Grid>
       )}
     </Box>
   );

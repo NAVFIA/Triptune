@@ -19,10 +19,10 @@ export const NotFoundPage: React.FC = () => {
       }}
     >
       <MapOutlinedIcon sx={{ fontSize: 96, color: 'text.disabled', mb: 2 }} />
-      <Typography variant="h1" fontSize="3rem" fontWeight={800} color="primary.main">
+      <Typography variant="h1" color="primary.main" sx={{ fontSize: '10rem', fontWeight: 900 }}>
         404
       </Typography>
-      <Typography variant="h2" fontSize="1.5rem" fontWeight={700} sx={{ mt: 1, mb: 1 }}>
+      <Typography variant="h2" sx={{ fontSize: '2rem', fontWeight: 700, mt: -2, mb: 2 }}>
         Destination Not Found
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 450, mb: 4 }}>

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Box, Typography, CardContent, Grid, Chip, Divider, Stack } from '@mui/material';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonOutlineIcon from '@mui/icons-material/AccountCircle';
 import MoodOutlinedIcon from '@mui/icons-material/MoodOutlined';
 import InterestsOutlinedIcon from '@mui/icons-material/InterestsOutlined';
-import DirectionBusOutlinedIcon from '@mui/icons-material/DirectionBusOutlined';
-import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import { useQuery } from '@tanstack/react-query';
 import { getProfileApi } from '../api/profile';
 import { useAuth } from '../hooks/useAuth';
@@ -38,11 +36,11 @@ export const ProfilePage: React.FC = () => {
 
       <Grid container spacing={3}>
         {/* User Identity Card */}
-        <Grid item xs={12} md={4}>
+        <Grid size={{xs: 12, md: 4}} >
           <AppCard>
             <CardContent sx={{ p: 3, textAlign: 'center' }}>
               <PersonOutlineIcon sx={{ fontSize: 64, color: 'primary.main', mb: 1 }} />
-              <Typography variant="h3" fontSize="1.25rem" fontWeight={700} gutterBottom>
+              <Typography variant="h3" gutterBottom sx={{ fontSize: '1.25rem', fontWeight: 700 }}>
                 {user?.fullName}
               </Typography>
               <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -54,7 +52,7 @@ export const ProfilePage: React.FC = () => {
         </Grid>
 
         {/* Travel Preferences */}
-        <Grid item xs={12} md={8}>
+        <Grid size={{xs: 12, md: 8}} >
           {isLoading && <LoadingSkeleton count={2} />}
 
           {isError && (
@@ -76,7 +74,7 @@ export const ProfilePage: React.FC = () => {
             <Stack spacing={3}>
               <AppCard>
                 <CardContent sx={{ p: 3 }}>
-                  <Typography variant="h3" fontSize="1.15rem" fontWeight={700} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                  <Typography variant="h3" sx={{ fontSize: '1.15rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                     <MoodOutlinedIcon color="primary" /> Preferred Moods
                   </Typography>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -91,7 +89,7 @@ export const ProfilePage: React.FC = () => {
 
                   <Divider sx={{ my: 3 }} />
 
-                  <Typography variant="h3" fontSize="1.15rem" fontWeight={700} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                  <Typography variant="h3" sx={{ fontSize: '1.15rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                     <InterestsOutlinedIcon color="secondary" /> Interests
                   </Typography>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -108,33 +106,33 @@ export const ProfilePage: React.FC = () => {
 
               <AppCard>
                 <CardContent sx={{ p: 3 }}>
-                  <Typography variant="h3" fontSize="1.15rem" fontWeight={700} sx={{ mb: 2 }}>
+                  <Typography variant="h3" sx={{ fontSize: '1.15rem', fontWeight: 700, mb: 2 }}>
                     Travel Style & Limits
                   </Typography>
                   <Grid container spacing={2}>
-                    <Grid item xs={6} sm={4}>
+                    <Grid size={{xs: 6, sm: 4}} >
                       <Typography variant="caption" color="text.secondary">Default Traveller Type</Typography>
-                      <Typography variant="body1" fontWeight={600}>{profile.defaultTravellerType || 'Not set'}</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{profile.defaultTravellerType || 'Not set'}</Typography>
                     </Grid>
-                    <Grid item xs={6} sm={4}>
+                    <Grid size={{xs: 6, sm: 4}} >
                       <Typography variant="caption" color="text.secondary">Preferred Travel Pace</Typography>
-                      <Typography variant="body1" fontWeight={600}>{profile.preferredTravelPace || 'Not set'}</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{profile.preferredTravelPace || 'Not set'}</Typography>
                     </Grid>
-                    <Grid item xs={6} sm={4}>
+                    <Grid size={{xs: 6, sm: 4}} >
                       <Typography variant="caption" color="text.secondary">Transport Preference</Typography>
-                      <Typography variant="body1" fontWeight={600}>{profile.preferredTransport || 'Not set'}</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{profile.preferredTransport || 'Not set'}</Typography>
                     </Grid>
-                    <Grid item xs={6} sm={4}>
+                    <Grid size={{xs: 6, sm: 4}} >
                       <Typography variant="caption" color="text.secondary">Crowd Tolerance</Typography>
-                      <Typography variant="body1" fontWeight={600}>{profile.crowdTolerance ? `${profile.crowdTolerance} / 10` : 'Not set'}</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{profile.crowdTolerance ? `${profile.crowdTolerance} / 10` : 'Not set'}</Typography>
                     </Grid>
-                    <Grid item xs={6} sm={4}>
+                    <Grid size={{xs: 6, sm: 4}} >
                       <Typography variant="caption" color="text.secondary">Max Travel Distance</Typography>
-                      <Typography variant="body1" fontWeight={600}>{profile.maximumTravelDistance ? `${profile.maximumTravelDistance} km` : 'Not set'}</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{profile.maximumTravelDistance ? `${profile.maximumTravelDistance} km` : 'Not set'}</Typography>
                     </Grid>
-                    <Grid item xs={6} sm={4}>
+                    <Grid size={{xs: 6, sm: 4}} >
                       <Typography variant="caption" color="text.secondary">Max Walking Distance</Typography>
-                      <Typography variant="body1" fontWeight={600}>{profile.maximumWalkingDistance ? `${profile.maximumWalkingDistance} km` : 'Not set'}</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{profile.maximumWalkingDistance ? `${profile.maximumWalkingDistance} km` : 'Not set'}</Typography>
                     </Grid>
                   </Grid>
                 </CardContent>
