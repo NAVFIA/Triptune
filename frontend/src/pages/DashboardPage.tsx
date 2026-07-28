@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import LuggageOutlinedIcon from '@mui/icons-material/LuggageOutlined';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonOutlineIcon from '@mui/icons-material/Person';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
@@ -75,7 +75,7 @@ export const DashboardPage: React.FC = () => {
 
       {/* Top Overview Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{xs: 12, sm: 6, md: 4}}>
           <AppCard>
             <CardContent sx={{ p: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
@@ -88,7 +88,7 @@ export const DashboardPage: React.FC = () => {
                   sx={{ bgcolor: '#F1F5F9', fontWeight: 600 }}
                 />
               </Box>
-              <Typography variant="h3" fontWeight={800} gutterBottom>
+              <Typography variant="h3" gutterBottom sx={{ fontWeight: 800 }}>
                 {isLoadingTrips ? '...' : totalTrips}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -98,7 +98,7 @@ export const DashboardPage: React.FC = () => {
           </AppCard>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{xs: 12, sm: 6, md: 4}}>
           <AppCard onClick={() => navigate('/profile')}>
             <CardContent sx={{ p: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
@@ -112,7 +112,7 @@ export const DashboardPage: React.FC = () => {
                   sx={{ fontWeight: 600 }}
                 />
               </Box>
-              <Typography variant="h4" fontWeight={700} gutterBottom>
+              <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
                 {isLoadingProfile ? 'Loading...' : hasProfile ? 'Travel Profile Set' : 'Setup Profile'}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -124,7 +124,7 @@ export const DashboardPage: React.FC = () => {
           </AppCard>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{xs: 12, sm: 6, md: 4}}>
           <AppCard onClick={() => navigate('/destinations')}>
             <CardContent sx={{ p: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
@@ -133,7 +133,7 @@ export const DashboardPage: React.FC = () => {
                 </Avatar>
                 <ArrowForwardIcon color="action" fontSize="small" />
               </Box>
-              <Typography variant="h4" fontWeight={700} gutterBottom>
+              <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
                 Explore Destinations
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -146,7 +146,7 @@ export const DashboardPage: React.FC = () => {
 
       {/* Recent Trips Section */}
       <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="h2" fontSize="1.35rem">
+        <Typography variant="h2" sx={{ fontSize: '1.35rem' }}>
           Recent Trips
         </Typography>
         {trips.length > 0 && (
@@ -189,10 +189,10 @@ export const DashboardPage: React.FC = () => {
               sx={{ '&:hover': { backgroundColor: '#FAFAFA' } }}
             >
               <CardContent sx={{ p: 3 }}>
-                <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={12} sm={8}>
+                <Grid container spacing={2} sx={{ alignItems: 'center' }}>
+                  <Grid size={{xs: 12, sm: 8}} >
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                      <Typography variant="h3" fontSize="1.15rem" fontWeight={700}>
+                      <Typography variant="h3" sx={{ fontSize: '1.15rem', fontWeight: 700 }}>
                         {trip.tripName}
                       </Typography>
                       <StatusChip status={trip.status} />
@@ -212,18 +212,15 @@ export const DashboardPage: React.FC = () => {
                     </Stack>
                   </Grid>
 
-                  <Grid
-                    item
-                    xs={12}
-                    sm={4}
+                  <Grid size={{xs: 12, sm: 4}} 
                     sx={{ textAlign: { xs: 'left', sm: 'right' } }}
                   >
                     {trip.perPersonBudget && (
-                      <Typography variant="subtitle2" fontWeight={700} color="primary.main">
+                      <Typography variant="subtitle2" color="primary.main" sx={{ fontWeight: 700 }}>
                         ${trip.perPersonBudget} / person
                       </Typography>
                     )}
-                    <Typography variant="caption" color="text.secondary" display="block">
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                       {trip.numberOfTravellers} Traveler{trip.numberOfTravellers > 1 ? 's' : ''}
                     </Typography>
                   </Grid>

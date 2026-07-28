@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Card, Container, Grid, Typography, Avatar } from '@mui/material';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { RegisterForm } from '../features/auth/RegisterForm';
 
 export const RegisterPage: React.FC = () => {
@@ -29,10 +29,7 @@ export const RegisterPage: React.FC = () => {
         >
           <Grid container>
             {/* Left Visual Panel */}
-            <Grid
-              item
-              xs={12}
-              md={6}
+            <Grid size={{xs: 12, md: 6}} 
               sx={{
                 backgroundColor: 'primary.main',
                 color: '#FFFFFF',
@@ -48,16 +45,15 @@ export const RegisterPage: React.FC = () => {
                   <Avatar sx={{ bgcolor: 'secondary.main', width: 44, height: 44 }}>
                     <TravelExploreIcon sx={{ fontSize: 26 }} />
                   </Avatar>
-                  <Typography variant="h4" fontWeight={800} color="#FFFFFF">
+                  <Typography variant="h4" color="#FFFFFF" sx={{ fontWeight: 800 }}>
                     Trip<span style={{ color: '#FF6B4A' }}>Tune</span>
                   </Typography>
                 </Box>
 
                 <Typography
                   variant="h2"
-                  fontWeight={800}
                   color="#FFFFFF"
-                  sx={{ fontSize: { xs: '1.75rem', md: '2.25rem' }, mb: 2 }}
+                  sx={{ fontSize: { xs: '1.75rem', md: '2.25rem' }, mb: 2, fontWeight: 800 }}
                 >
                   Start your intelligent travel journey.
                 </Typography>
@@ -85,10 +81,7 @@ export const RegisterPage: React.FC = () => {
             </Grid>
 
             {/* Right Form Panel */}
-            <Grid
-              item
-              xs={12}
-              md={6}
+            <Grid size={{xs: 12, md: 6}} 
               sx={{
                 p: { xs: 3, sm: 5, md: 6 },
                 display: 'flex',
@@ -98,7 +91,7 @@ export const RegisterPage: React.FC = () => {
               }}
             >
               <Box sx={{ mb: 4 }}>
-                <Typography variant="h3" fontWeight={800} gutterBottom>
+                <Typography variant="h3" gutterBottom sx={{ fontWeight: 800 }}>
                   Create your account
                 </Typography>
                 <Typography variant="body2" color="text.secondary">

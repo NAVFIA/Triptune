@@ -29,10 +29,7 @@ export const LoginPage: React.FC = () => {
         >
           <Grid container>
             {/* Left Visual Panel */}
-            <Grid
-              item
-              xs={12}
-              md={6}
+            <Grid size={{xs: 12, md: 6}} 
               sx={{
                 backgroundColor: 'primary.main',
                 color: '#FFFFFF',
@@ -49,16 +46,15 @@ export const LoginPage: React.FC = () => {
                   <Avatar sx={{ bgcolor: 'secondary.main', width: 44, height: 44 }}>
                     <TravelExploreIcon sx={{ fontSize: 26 }} />
                   </Avatar>
-                  <Typography variant="h4" fontWeight={800} color="#FFFFFF">
+                  <Typography variant="h4" color="#FFFFFF" sx={{ fontWeight: 800 }}>
                     Trip<span style={{ color: '#FF6B4A' }}>Tune</span>
                   </Typography>
                 </Box>
 
                 <Typography
                   variant="h2"
-                  fontWeight={800}
                   color="#FFFFFF"
-                  sx={{ fontSize: { xs: '1.75rem', md: '2.25rem' }, mb: 2 }}
+                  sx={{ fontSize: { xs: '1.75rem', md: '2.25rem' }, mb: 2, fontWeight: 800 }}
                 >
                   Travel Planning, tuned to your mood.
                 </Typography>
@@ -83,7 +79,7 @@ export const LoginPage: React.FC = () => {
                   }}
                 >
                   <AutoAwesomeIcon sx={{ color: '#FF6B4A', fontSize: 18 }} />
-                  <Typography variant="caption" fontWeight={600} color="#FFFFFF">
+                  <Typography variant="caption" color="#FFFFFF" sx={{ fontWeight: 600 }}>
                     Adaptive & Mood-Aware Recommendation Engine
                   </Typography>
                 </Box>
@@ -91,10 +87,7 @@ export const LoginPage: React.FC = () => {
             </Grid>
 
             {/* Right Form Panel */}
-            <Grid
-              item
-              xs={12}
-              md={6}
+            <Grid size={{xs: 12, md: 6}} 
               sx={{
                 p: { xs: 3, sm: 5, md: 6 },
                 display: 'flex',
@@ -104,7 +97,7 @@ export const LoginPage: React.FC = () => {
               }}
             >
               <Box sx={{ mb: 4 }}>
-                <Typography variant="h3" fontWeight={800} gutterBottom>
+                <Typography variant="h3" gutterBottom sx={{ fontWeight: 800 }}>
                   Welcome back
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
