@@ -31,7 +31,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle fontWeight={700}>{title}</DialogTitle>
+      <DialogTitle sx={{ fontWeight: 700 }}>{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>{message}</DialogContentText>
       </DialogContent>

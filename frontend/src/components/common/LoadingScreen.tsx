@@ -18,7 +18,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ message = 'Loading
       }}
     >
       <CircularProgress color="primary" size={48} />
-      <Typography variant="body1" color="text.secondary" fontWeight={500}>
+      <Typography variant="body1" color="text.secondary" sx={{ fontWeight: 500 }}>
         {message}
       </Typography>
     </Box>

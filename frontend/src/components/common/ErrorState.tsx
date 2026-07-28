@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ErrorOutlineIcon from '@mui/icons-material/Error';
 
 interface ErrorStateProps {
   title?: string;
@@ -29,7 +29,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
       }}
     >
       <ErrorOutlineIcon sx={{ fontSize: 48, color: 'error.main', mb: 1 }} />
-      <Typography variant="h6" color="error.main" fontWeight={700} gutterBottom>
+      <Typography variant="h6" color="error.main" sx={{ fontWeight: 700 }} gutterBottom>
         {title}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 450, mb: onRetry ? 2 : 0 }}>

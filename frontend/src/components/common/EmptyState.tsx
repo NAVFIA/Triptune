@@ -33,7 +33,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       }}
     >
       {icon}
-      <Typography variant="h6" fontWeight={700} sx={{ mt: 2, mb: 1 }}>
+      <Typography variant="h6" sx={{ mt: 2, mb: 1, fontWeight: 700 }}>
         {title}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 400, mb: actionText ? 3 : 0 }}>

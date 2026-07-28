@@ -95,7 +95,7 @@ export const LoginForm: React.FC = () => {
           component={RouterLink}
           to="/register"
           color="secondary.main"
-          fontWeight={700}
+          sx={{ fontWeight: 700 }}
           underline="hover"
         >
           Create one now

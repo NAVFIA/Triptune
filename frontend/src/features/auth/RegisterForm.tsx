@@ -134,7 +134,7 @@ export const RegisterForm: React.FC = () => {
           component={RouterLink}
           to="/login"
           color="secondary.main"
-          fontWeight={700}
+          sx={{ fontWeight: 700 }}
           underline="hover"
         >
           Sign in

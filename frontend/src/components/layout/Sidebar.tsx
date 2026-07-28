@@ -11,9 +11,9 @@ import {
   Toolbar,
 } from '@mui/material';
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlined';
 import LuggageOutlinedIcon from '@mui/icons-material/LuggageOutlined';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutlined';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
@@ -97,9 +97,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
                 </ListItemIcon>
                 <ListItemText
                   primary={item.text}
-                  primaryTypographyProps={{
-                    fontSize: '0.9rem',
-                    fontWeight: active ? 700 : 500,
+                  slotProps={{
+                    primary: {
+                      sx: {
+                        fontSize: '0.9rem',
+                        fontWeight: active ? 700 : 500,
+                      }
+                    }
                   }}
                 />
                 {item.tag && (

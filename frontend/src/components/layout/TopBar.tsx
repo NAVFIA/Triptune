@@ -14,7 +14,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import LogoutIcon from '@mui/icons-material/Logout';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutlined';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -101,7 +101,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onMobileDrawerToggle }) => {
             >
               <TravelExploreIcon sx={{ color: '#FFFFFF', fontSize: 22 }} />
             </Avatar>
-            <Typography variant="h5" fontWeight={800} color="primary.main" letterSpacing="-0.02em">
+            <Typography variant="h5" color="primary.main" sx={{ fontWeight: 800, letterSpacing: "-0.02em" }}>
               Trip<span style={{ color: '#FF6B4A' }}>Tune</span>
             </Typography>
           </Box>
@@ -135,8 +135,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onMobileDrawerToggle }) => {
               </Avatar>
               <Typography
                 variant="body2"
-                fontWeight={600}
-                sx={{ display: { xs: 'none', sm: 'block' } }}
+                sx={{ fontWeight: 600, display: { xs: 'none', sm: 'block' } }}
               >
                 {user.fullName}
               </Typography>
@@ -148,20 +147,22 @@ export const TopBar: React.FC<TopBarProps> = ({ onMobileDrawerToggle }) => {
               onClose={handleMenuClose}
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-              PaperProps={{
-                sx: {
-                  width: 200,
-                  mt: 1.5,
-                  borderRadius: 3,
-                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
-                },
+              slotProps={{
+                paper: {
+                  sx: {
+                    width: 200,
+                    mt: 1.5,
+                    borderRadius: 3,
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                  },
+                }
               }}
             >
               <Box sx={{ px: 2, py: 1.5 }}>
-                <Typography variant="subtitle2" fontWeight={700}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                   {user.fullName}
                 </Typography>
-                <Typography variant="caption" color="text.secondary" noWrap display="block">
+                <Typography variant="caption" color="text.secondary" noWrap sx={{ display: 'block' }}>
                   {user.email}
                 </Typography>
               </Box>
