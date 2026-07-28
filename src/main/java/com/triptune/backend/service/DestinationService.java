@@ -28,10 +28,18 @@ public class DestinationService {
 
         Destination destination = Destination.builder()
                 .name(request.getName())
+                .state(request.getState())
                 .country(request.getCountry())
                 .description(request.getDescription())
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
+                .averageDailyCost(request.getAverageDailyCost())
+                .minimumRecommendedDays(request.getMinimumRecommendedDays())
+                .maximumRecommendedDays(request.getMaximumRecommendedDays())
+                .averageRating(request.getAverageRating())
                 .imageUrl(request.getImageUrl())
-                .budgetLevel(request.getBudgetLevel())
+                .bestSeason(request.getBestSeason())
+                .active(request.getActive() != null ? request.getActive() : true)
                 .build();
 
         Destination savedDestination = destinationRepository.save(destination);
@@ -62,10 +70,20 @@ public class DestinationService {
         }
 
         destination.setName(request.getName());
+        destination.setState(request.getState());
         destination.setCountry(request.getCountry());
         destination.setDescription(request.getDescription());
+        destination.setLatitude(request.getLatitude());
+        destination.setLongitude(request.getLongitude());
+        destination.setAverageDailyCost(request.getAverageDailyCost());
+        destination.setMinimumRecommendedDays(request.getMinimumRecommendedDays());
+        destination.setMaximumRecommendedDays(request.getMaximumRecommendedDays());
+        destination.setAverageRating(request.getAverageRating());
         destination.setImageUrl(request.getImageUrl());
-        destination.setBudgetLevel(request.getBudgetLevel());
+        destination.setBestSeason(request.getBestSeason());
+        if (request.getActive() != null) {
+            destination.setActive(request.getActive());
+        }
 
         Destination updatedDestination = destinationRepository.save(destination);
         return mapToResponse(updatedDestination);
@@ -83,10 +101,18 @@ public class DestinationService {
         return DestinationResponse.builder()
                 .id(destination.getId())
                 .name(destination.getName())
+                .state(destination.getState())
                 .country(destination.getCountry())
                 .description(destination.getDescription())
+                .latitude(destination.getLatitude())
+                .longitude(destination.getLongitude())
+                .averageDailyCost(destination.getAverageDailyCost())
+                .minimumRecommendedDays(destination.getMinimumRecommendedDays())
+                .maximumRecommendedDays(destination.getMaximumRecommendedDays())
+                .averageRating(destination.getAverageRating())
                 .imageUrl(destination.getImageUrl())
-                .budgetLevel(destination.getBudgetLevel())
+                .bestSeason(destination.getBestSeason())
+                .active(destination.getActive())
                 .createdAt(destination.getCreatedAt())
                 .updatedAt(destination.getUpdatedAt())
                 .build();

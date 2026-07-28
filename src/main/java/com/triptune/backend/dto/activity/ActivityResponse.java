@@ -1,4 +1,4 @@
-package com.triptune.backend.dto.destination;
+package com.triptune.backend.dto.activity;
 
 import java.time.LocalDateTime;
 
@@ -11,20 +11,25 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DestinationResponse {
+public class ActivityResponse {
+
     private Long id;
+    private Long destinationId;
     private String name;
-    private String state;
-    private String country;
     private String description;
+    private String category;
     private Double latitude;
     private Double longitude;
-    private Double averageDailyCost;
-    private Integer minimumRecommendedDays;
-    private Integer maximumRecommendedDays;
-    private Double averageRating;
+    private Double estimatedCost;
+    private Integer durationMinutes;
+    private String openingTime;
+    private String closingTime;
+    private String energyLevel;
+    private Boolean indoor;
+    private Boolean weatherDependent;
+    private Boolean bookingRequired;
+    private Double rating;
     private String imageUrl;
-    private String bestSeason;
     private Boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

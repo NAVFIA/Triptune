@@ -18,6 +18,9 @@ public class DestinationRequest {
     @Size(max = 150, message = "Destination name must be at most 150 characters")
     private String name;
 
+    @Size(max = 100, message = "State must be at most 100 characters")
+    private String state;
+
     @NotBlank(message = "Country is required")
     @Size(max = 100, message = "Country name must be at most 100 characters")
     private String country;
@@ -25,10 +28,18 @@ public class DestinationRequest {
     @Size(max = 1000, message = "Description must be at most 1000 characters")
     private String description;
 
+    private Double latitude;
+    private Double longitude;
+    private Double averageDailyCost;
+    private Integer minimumRecommendedDays;
+    private Integer maximumRecommendedDays;
+    private Double averageRating;
+
     @Size(max = 512, message = "Image URL must be at most 512 characters")
     private String imageUrl;
 
-    @NotBlank(message = "Budget level is required")
-    @Size(max = 20, message = "Budget level must be at most 20 characters")
-    private String budgetLevel;
+    @Size(max = 50, message = "Best season must be at most 50 characters")
+    private String bestSeason;
+
+    private Boolean active;
 }
