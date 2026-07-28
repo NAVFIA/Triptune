@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.triptune.backend.dto.ApiResponse;
 import com.triptune.backend.dto.auth.AuthResponse;
+import com.triptune.backend.dto.auth.LoginRequest;
 import com.triptune.backend.dto.auth.RegisterRequest;
 import com.triptune.backend.service.AuthService;
 
@@ -29,5 +30,12 @@ public class AuthController {
         AuthResponse authResponse = authService.register(request);
         ApiResponse<AuthResponse> response = ApiResponse.success("Registration successful", authResponse);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest request) {
+        AuthResponse authResponse = authService.login(request);
+        ApiResponse<AuthResponse> response = ApiResponse.success("Login successful", authResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

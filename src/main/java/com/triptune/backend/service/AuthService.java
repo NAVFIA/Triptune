@@ -58,6 +58,28 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
+        String token = jwtService.generateToken(
+                org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
+                        .password(user.getPassword())
+                        .authorities("ROLE_" + user.getRole())
+                        .build()
+        );
+
+        UserResponse userResponse = UserResponse.builder()
+                .id(user.getId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .role(user.getRole())
+                .build();
+
+        return new AuthResponse(token, "Bearer", userResponse);
     }
 }
