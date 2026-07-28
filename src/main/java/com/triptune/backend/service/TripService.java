@@ -204,7 +204,7 @@ public class TripService {
                     .averageDailyCost(d.getAverageDailyCost())
                     .bestSeason(d.getBestSeason())
                     .averageRating(d.getAverageRating())
-                    .isActive(d.getActive())
+                    .active(d.getActive())
                     .createdAt(d.getCreatedAt())
                     .updatedAt(d.getUpdatedAt())
                     .build();
