@@ -6,9 +6,14 @@ import {
   Button,
   Chip,
   Collapse,
+  FormControl,
+  FormHelperText,
   Grid,
+  InputLabel,
   MenuItem,
+  OutlinedInput,
   Paper,
+  Select,
   Snackbar,
   Stack,
   Step,
@@ -99,56 +104,53 @@ const STEP_FIELDS: Record<number, (keyof TripFormData)[]> = {
   ],
 };
 
-interface EnumMultiSelectProps<T extends string> {
+interface MuiMultiSelectProps<T extends string> {
   label: string;
   options: ReadonlyArray<{ value: T; label: string }>;
   value: T[];
   onChange: (value: T[]) => void;
   error?: string;
+  id: string;
 }
 
-function EnumMultiSelect<T extends string>({
+function MuiMultiSelect<T extends string>({
   label,
   options,
   value,
   onChange,
   error,
-}: EnumMultiSelectProps<T>) {
-  const toggleValue = (optionValue: T) => {
-    if (value.includes(optionValue)) {
-      onChange(value.filter((item) => item !== optionValue));
-      return;
-    }
-    onChange([...value, optionValue]);
-  };
-
+  id,
+}: MuiMultiSelectProps<T>) {
   return (
-    <Box>
-      <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
-        {label}
-      </Typography>
-      <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
-        {options.map((option) => {
-          const selected = value.includes(option.value);
-          return (
-            <Chip
-              key={option.value}
-              label={option.label}
-              clickable
-              color={selected ? 'primary' : 'default'}
-              variant={selected ? 'filled' : 'outlined'}
-              onClick={() => toggleValue(option.value)}
-              sx={{ mb: 1 }}
-            />
-          );
-        })}
-      </Stack>
-      {error && (
-        <Typography variant="caption" color="error" sx={{ mt: 0.5, display: 'block' }}>
-          {error}
-        </Typography>
-      )}
-    </Box>
+    <FormControl fullWidth error={!!error}>
+      <InputLabel id={`${id}-label`}>{label}</InputLabel>
+      <Select
+        labelId={`${id}-label`}
+        id={id}
+        multiple
+        value={value}
+        onChange={(event) => {
+          const val = event.target.value;
+          onChange(typeof val === 'string' ? (val.split(',') as T[]) : (val as T[]));
+        }}
+        input={<OutlinedInput label={label} />}
+        renderValue={(selected) => (
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            {selected.map((val) => {
+              const option = options.find((opt) => opt.value === val);
+              return <Chip key={val} label={option ? option.label : val} size="small" />;
+            })}
+          </Box>
+        )}
+      >
+        {options.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </Select>
+      {error && <FormHelperText id={`${id}-error`}>{error}</FormHelperText>}
+    </FormControl>
   );
 }
 
@@ -379,7 +381,8 @@ export const CreateTripPage: React.FC = () => {
             name="moods"
             control={control}
             render={({ field }) => (
-              <EnumMultiSelect
+              <MuiMultiSelect
+                id="moods-select"
                 label="Moods"
                 options={MOOD_OPTIONS}
                 value={field.value}
@@ -392,7 +395,8 @@ export const CreateTripPage: React.FC = () => {
             name="interests"
             control={control}
             render={({ field }) => (
-              <EnumMultiSelect
+              <MuiMultiSelect
+                id="interests-select"
                 label="Interests"
                 options={INTEREST_OPTIONS}
                 value={field.value}
@@ -475,7 +479,7 @@ export const CreateTripPage: React.FC = () => {
                 <TextField
                   type="number"
                   label="Crowd Tolerance (1-10)"
-                  inputProps={{ min: 1, max: 10 }}
+                  slotProps={{ htmlInput: { min: 1, max: 10 } }}
                   value={field.value ?? ''}
                   onChange={(event) =>
                     field.onChange(event.target.value === '' ? undefined : Number(event.target.value))
@@ -582,7 +586,7 @@ export const CreateTripPage: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {renderStepContent()}
 
-          <Stack direction="row" spacing={2} sx={{ mt: 4 }} flexWrap="wrap" useFlexGap>
+          <Stack direction="row" spacing={2} sx={{ mt: 4, flexWrap: 'wrap' }} useFlexGap>
             {activeStep > 0 && (
               <Button variant="outlined" onClick={() => setActiveStep((prev) => prev - 1)} disabled={loading}>
                 Back

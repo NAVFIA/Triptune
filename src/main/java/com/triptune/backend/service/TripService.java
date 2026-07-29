@@ -111,12 +111,14 @@ public class TripService {
         return mapToResponse(savedTrip);
     }
 
+    @Transactional(readOnly = true)
     public Page<TripResponse> getTripsForCurrentUser(Pageable pageable) {
         User user = getAuthenticatedUser();
         return tripRepository.findByCreatedById(user.getId(), pageable)
                 .map(this::mapToResponse);
     }
 
+    @Transactional(readOnly = true)
     public TripResponse getTripByIdForCurrentUser(Long tripId) {
         User user = getAuthenticatedUser();
         Trip trip = tripRepository.findByIdAndCreatedById(tripId, user.getId())
@@ -237,8 +239,8 @@ public class TripService {
                 .numberOfElderly(trip.getNumberOfElderly())
                 .travellerType(trip.getTravellerType())
                 .travelPace(trip.getTravelPace())
-                .moods(trip.getMoods())
-                .interests(trip.getInterests())
+                .moods(trip.getMoods() != null ? new java.util.HashSet<>(trip.getMoods()) : null)
+                .interests(trip.getInterests() != null ? new java.util.HashSet<>(trip.getInterests()) : null)
                 .totalBudget(trip.getTotalBudget())
                 .perPersonBudget(trip.getPerPersonBudget())
                 .budgetFlexibility(trip.getBudgetFlexibility())
