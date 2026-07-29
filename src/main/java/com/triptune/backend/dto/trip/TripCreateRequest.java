@@ -5,10 +5,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
@@ -45,6 +47,7 @@ public class TripCreateRequest {
     @NotNull(message = "End date is required")
     private LocalDate endDate;
 
+    @NotNull(message = "Number of travellers is required")
     @Min(value = 1, message = "Number of travellers must be at least 1")
     private Integer numberOfTravellers;
 
@@ -57,15 +60,23 @@ public class TripCreateRequest {
     @PositiveOrZero
     private Integer numberOfElderly;
 
+    @NotNull(message = "Traveller type is required")
     private TravellerType travellerType;
+
+    @NotNull(message = "Travel pace is required")
     private TravelPace travelPace;
+
+    @NotEmpty(message = "At least one mood is required")
     private Set<Mood> moods;
+
+    @NotEmpty(message = "At least one interest is required")
     private Set<Interest> interests;
 
     @PositiveOrZero(message = "Budget cannot be negative")
     private BigDecimal totalBudget;
 
-    @PositiveOrZero(message = "Budget cannot be negative")
+    @NotNull(message = "Per person budget is required")
+    @DecimalMin(value = "0.01", message = "Per person budget must be greater than 0")
     private BigDecimal perPersonBudget;
 
     private BudgetFlexibility budgetFlexibility;

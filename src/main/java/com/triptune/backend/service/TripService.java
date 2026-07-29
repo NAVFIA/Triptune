@@ -18,6 +18,7 @@ import com.triptune.backend.dto.trip.TripUpdateRequest;
 import com.triptune.backend.entity.Destination;
 import com.triptune.backend.entity.Trip;
 import com.triptune.backend.entity.User;
+import com.triptune.backend.enums.BudgetFlexibility;
 import com.triptune.backend.enums.TripStatus;
 import com.triptune.backend.repository.DestinationRepository;
 import com.triptune.backend.repository.TripRepository;
@@ -55,15 +56,26 @@ public class TripService {
         BigDecimal totalBudget = request.getTotalBudget();
         BigDecimal perPersonBudget = request.getPerPersonBudget();
         
-        int travellers = request.getNumberOfTravellers() != null ? request.getNumberOfTravellers() : 1;
+        int travellers = request.getNumberOfTravellers();
 
         if (totalBudget == null && perPersonBudget != null) {
             totalBudget = perPersonBudget.multiply(BigDecimal.valueOf(travellers));
         } else if (perPersonBudget == null && totalBudget != null) {
             perPersonBudget = totalBudget.divide(BigDecimal.valueOf(travellers), 2, RoundingMode.HALF_UP);
-        } else if (totalBudget == null && perPersonBudget == null) {
-            throw new IllegalArgumentException("Either totalBudget or perPersonBudget must be provided");
         }
+
+        Integer numberOfAdults = request.getNumberOfAdults() != null
+                ? request.getNumberOfAdults()
+                : travellers;
+        Integer numberOfChildren = request.getNumberOfChildren() != null
+                ? request.getNumberOfChildren()
+                : 0;
+        Integer numberOfElderly = request.getNumberOfElderly() != null
+                ? request.getNumberOfElderly()
+                : 0;
+        BudgetFlexibility budgetFlexibility = request.getBudgetFlexibility() != null
+                ? request.getBudgetFlexibility()
+                : BudgetFlexibility.STRICT;
 
         Trip trip = Trip.builder()
                 .createdBy(user)
@@ -72,17 +84,17 @@ public class TripService {
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .numberOfDays(numberOfDays)
-                .numberOfTravellers(request.getNumberOfTravellers())
-                .numberOfAdults(request.getNumberOfAdults())
-                .numberOfChildren(request.getNumberOfChildren())
-                .numberOfElderly(request.getNumberOfElderly())
+                .numberOfTravellers(travellers)
+                .numberOfAdults(numberOfAdults)
+                .numberOfChildren(numberOfChildren)
+                .numberOfElderly(numberOfElderly)
                 .travellerType(request.getTravellerType())
                 .travelPace(request.getTravelPace())
                 .moods(request.getMoods())
                 .interests(request.getInterests())
                 .totalBudget(totalBudget)
                 .perPersonBudget(perPersonBudget)
-                .budgetFlexibility(request.getBudgetFlexibility())
+                .budgetFlexibility(budgetFlexibility)
                 .preferredTransport(request.getPreferredTransport())
                 .maximumTravelDistance(request.getMaximumTravelDistance())
                 .dietaryPreferences(request.getDietaryPreferences())

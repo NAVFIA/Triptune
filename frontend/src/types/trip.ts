@@ -1,3 +1,11 @@
+import type {
+  BudgetFlexibility,
+  Interest,
+  Mood,
+  TravelPace,
+  TravellerType,
+} from '../constants/tripEnums';
+
 export interface SelectedDestinationSummary {
   id: number;
   name: string;
@@ -52,4 +60,25 @@ export interface PageResponse<T> {
   totalPages: number;
   size: number;
   number: number;
+}
+
+export interface TripCreateRequest {
+  tripName: string;
+  startingLocation: string;
+  startDate: string;
+  endDate: string;
+  numberOfTravellers: number;
+  travellerType: TravellerType;
+  travelPace: TravelPace;
+  moods: Mood[];
+  interests: Interest[];
+  perPersonBudget: number;
+  numberOfAdults?: number;
+  numberOfChildren?: number;
+  numberOfElderly?: number;
+  preferredTransport?: string;
+  maximumTravelDistance?: number;
+  crowdTolerance?: number;
+  maximumWalkingDistance?: number;
+  budgetFlexibility?: BudgetFlexibility;
 }
