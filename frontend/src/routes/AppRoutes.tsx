@@ -13,6 +13,7 @@ import { ProfilePage } from '../pages/ProfilePage';
 import { DestinationsPage } from '../pages/DestinationsPage';
 import { DestinationsExplorerPage } from '../pages/DestinationsExplorerPage';
 import { TripDetailsPage } from '../pages/TripDetailsPage';
+import { AIAssistantPage } from '../pages/AIAssistantPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 
 export const AppRoutes: React.FC = () => {
@@ -36,6 +37,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/destinations" element={<DestinationsExplorerPage />} />
           <Route path="/trips/:tripId/destinations" element={<DestinationsPage />} />
+          <Route path="/assistant" element={<AIAssistantPage />} />
         </Route>
       </Route>
 

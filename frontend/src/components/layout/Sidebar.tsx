@@ -16,6 +16,7 @@ import LuggageOutlinedIcon from '@mui/icons-material/LuggageOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutlined';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import SmartToyOutlinedIcon from '@mui/icons-material/SmartToyOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const DRAWER_WIDTH = 260;
@@ -44,6 +45,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
     { text: 'Planned Trips', icon: <CheckCircleOutlineIcon />, path: '/trips?filter=planned' },
     { text: 'Travel Profile', icon: <PersonOutlineIcon />, path: '/profile' },
     { text: 'Destinations', icon: <ExploreOutlinedIcon />, path: '/destinations' },
+    { text: 'AI Assistant', icon: <SmartToyOutlinedIcon />, path: '/assistant', tag: 'NLP' },
   ];
 
   const drawerContent = (
