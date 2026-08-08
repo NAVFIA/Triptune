@@ -179,6 +179,12 @@ public class Trip {
     @Builder.Default
     private TripStatus status = TripStatus.DRAFT;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "trip_rejected_activities", joinColumns = @JoinColumn(name = "trip_id"))
+    @Column(name = "activity_id")
+    @Builder.Default
+    private Set<Long> rejectedActivityIds = new HashSet<>();
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

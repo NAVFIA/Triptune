@@ -11,6 +11,7 @@ import { MyTripsPage } from '../pages/MyTripsPage';
 import { CreateTripPage } from '../pages/CreateTripPage';
 import { ProfilePage } from '../pages/ProfilePage';
 import { DestinationsPage } from '../pages/DestinationsPage';
+import { DestinationsExplorerPage } from '../pages/DestinationsExplorerPage';
 import { TripDetailsPage } from '../pages/TripDetailsPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 
@@ -33,6 +34,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="/trips/create" element={<CreateTripPage />} />
           <Route path="/trips/:tripId" element={<TripDetailsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/destinations" element={<DestinationsExplorerPage />} />
           <Route path="/trips/:tripId/destinations" element={<DestinationsPage />} />
         </Route>
       </Route>

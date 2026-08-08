@@ -17,6 +17,8 @@ export interface SelectedDestinationSummary {
   bestSeason?: string;
   averageRating?: number;
   active?: boolean;
+  minimumRecommendedDays?: number;
+  maximumRecommendedDays?: number;
 }
 
 export interface Trip {
@@ -81,4 +83,31 @@ export interface TripCreateRequest {
   crowdTolerance?: number;
   maximumWalkingDistance?: number;
   budgetFlexibility?: BudgetFlexibility;
+}
+
+export interface ItineraryActivity {
+  id: number;
+  name: string;
+  description?: string;
+  durationMinutes: number;
+  estimatedCost: number;
+  timeSlot: string;
+  startTime: string;
+  category?: string;
+}
+
+export interface ItineraryDay {
+  dayNumber: number;
+  date: string;
+  activities: ItineraryActivity[];
+}
+
+export interface Itinerary {
+  tripId: number;
+  destinationId: number;
+  destinationName: string;
+  numberOfDays: number;
+  numberOfTravellers: number;
+  totalEstimatedCost: number;
+  days: ItineraryDay[];
 }

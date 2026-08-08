@@ -76,7 +76,7 @@ export const DashboardPage: React.FC = () => {
       {/* Top Overview Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid size={{xs: 12, sm: 6, md: 4}}>
-          <AppCard>
+          <AppCard onClick={() => navigate('/trips')}>
             <CardContent sx={{ p: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                 <Avatar sx={{ bgcolor: '#E0F2FE', color: '#0284C7', width: 48, height: 48 }}>

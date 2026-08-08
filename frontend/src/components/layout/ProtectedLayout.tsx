@@ -25,7 +25,9 @@ export const ProtectedLayout: React.FC = () => {
         }}
       >
         <Toolbar />
-        <Outlet />
+        <Box className="page-fade-in">
+          <Outlet />
+        </Box>
       </Box>
     </Box>
   );

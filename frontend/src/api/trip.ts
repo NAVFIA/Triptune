@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { apiClient } from './client';
 import type { ApiResponse } from '../types/auth';
-import type { PageResponse, Trip, TripCreateRequest } from '../types/trip';
+import type { PageResponse, Trip, TripCreateRequest, Itinerary, SelectedDestinationSummary } from '../types/trip';
 
 export const getTripsApi = async (page = 0, size = 10): Promise<ApiResponse<PageResponse<Trip>>> => {
   const response = await apiClient.get<ApiResponse<PageResponse<Trip>>>(`/trips?page=${page}&size=${size}`);
@@ -46,5 +46,25 @@ export const getDestinationRecommendationsApi = async (tripId: number): Promise<
 
 export const selectDestinationApi = async (tripId: number, destinationId: number): Promise<ApiResponse<Trip>> => {
   const response = await apiClient.post<ApiResponse<Trip>>(`/trips/${tripId}/select-destination/${destinationId}`);
+  return response.data;
+};
+
+export const getItineraryApi = async (tripId: number): Promise<ApiResponse<Itinerary>> => {
+  const response = await apiClient.get<ApiResponse<Itinerary>>(`/trips/${tripId}/itinerary`);
+  return response.data;
+};
+
+export const rejectItineraryActivityApi = async (tripId: number, activityId: number): Promise<ApiResponse<Itinerary>> => {
+  const response = await apiClient.post<ApiResponse<Itinerary>>(`/trips/${tripId}/itinerary/reject/${activityId}`);
+  return response.data;
+};
+
+export const confirmTripApi = async (tripId: number): Promise<ApiResponse<Trip>> => {
+  const response = await apiClient.post<ApiResponse<Trip>>(`/trips/${tripId}/confirm`);
+  return response.data;
+};
+
+export const getDestinationsApi = async (): Promise<ApiResponse<SelectedDestinationSummary[]>> => {
+  const response = await apiClient.get<ApiResponse<SelectedDestinationSummary[]>>('/destinations');
   return response.data;
 };

@@ -7,25 +7,26 @@ interface StatusChipProps extends Omit<ChipProps, 'color'> {
 }
 
 export const StatusChip: React.FC<StatusChipProps> = ({ status, ...props }) => {
-  const getStatusColor = (st: string): { bg: string; text: string } => {
+  const getStatusColor = (st: string): { bg: string; text: string; label: string } => {
     switch (st.toUpperCase()) {
       case 'DRAFT':
-        return { bg: '#F1F5F9', text: '#475569' };
+        return { bg: '#F1F5F9', text: '#475569', label: 'Draft' };
       case 'DESTINATION_RECOMMENDED':
-        return { bg: '#E0F2FE', text: '#0369A1' };
+        return { bg: '#E0F2FE', text: '#0369A1', label: 'Destination Recommended' };
       case 'DESTINATION_SELECTED':
-        return { bg: '#FEF3C7', text: '#B45309' };
+        return { bg: '#FEF3C7', text: '#B45309', label: 'Destination Selected' };
       case 'ITINERARY_GENERATED':
-        return { bg: '#EDE9FE', text: '#6D28D9' };
+        return { bg: '#EDE9FE', text: '#6D28D9', label: 'Itinerary Generated' };
       case 'CONFIRMED':
+        return { bg: '#D1FAE5', text: '#047857', label: 'Planned' };
       case 'IN_PROGRESS':
-        return { bg: '#D1FAE5', text: '#047857' };
+        return { bg: '#D1FAE5', text: '#047857', label: 'In Progress' };
       case 'COMPLETED':
-        return { bg: '#DCFCE7', text: '#15803D' };
+        return { bg: '#DCFCE7', text: '#15803D', label: 'Completed' };
       case 'CANCELLED':
-        return { bg: '#FEE2E2', text: '#B91C1C' };
+        return { bg: '#FEE2E2', text: '#B91C1C', label: 'Cancelled' };
       default:
-        return { bg: '#F1F5F9', text: '#475569' };
+        return { bg: '#F1F5F9', text: '#475569', label: st.replace(/_/g, ' ') };
     }
   };
 
@@ -33,7 +34,7 @@ export const StatusChip: React.FC<StatusChipProps> = ({ status, ...props }) => {
 
   return (
     <Chip
-      label={status.replace(/_/g, ' ')}
+      label={style.label}
       size="small"
       {...props}
       sx={{

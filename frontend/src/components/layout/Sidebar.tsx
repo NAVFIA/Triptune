@@ -15,8 +15,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlined';
 import LuggageOutlinedIcon from '@mui/icons-material/LuggageOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutlined';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const DRAWER_WIDTH = 260;
@@ -42,29 +41,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
     { text: 'Dashboard', icon: <DashboardOutlinedIcon />, path: '/dashboard' },
     { text: 'Create Trip', icon: <AddCircleOutlineIcon />, path: '/trips/create' },
     { text: 'My Trips', icon: <LuggageOutlinedIcon />, path: '/trips' },
+    { text: 'Planned Trips', icon: <CheckCircleOutlineIcon />, path: '/trips?filter=planned' },
     { text: 'Travel Profile', icon: <PersonOutlineIcon />, path: '/profile' },
     { text: 'Destinations', icon: <ExploreOutlinedIcon />, path: '/destinations' },
-    {
-      text: 'Itinerary',
-      icon: <CalendarTodayOutlinedIcon />,
-      path: '#',
-      disabled: true,
-      tag: 'Soon',
-    },
-    {
-      text: 'Budget',
-      icon: <AccountBalanceWalletOutlinedIcon />,
-      path: '#',
-      disabled: true,
-      tag: 'Soon',
-    },
   ];
 
   const drawerContent = (
     <Box sx={{ overflow: 'auto', mt: 1 }}>
       <List sx={{ px: 2 }}>
         {navItems.map((item) => {
-          const active = location.pathname === item.path;
+          const active = (location.pathname + location.search) === item.path;
           return (
             <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
               <ListItemButton
@@ -79,11 +65,29 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
                   borderRadius: '10px',
                   py: 1.2,
                   px: 2,
-                  backgroundColor: active ? '#F1F5F9' : 'transparent',
-                  color: active ? 'primary.main' : 'text.primary',
+                  backgroundColor: active ? 'rgba(59, 130, 246, 0.12)' : 'transparent',
+                  color: active ? 'primary.main' : 'text.secondary',
                   fontWeight: active ? 700 : 500,
+                  position: 'relative',
+                  '&::before': active
+                    ? {
+                        content: '""',
+                        position: 'absolute',
+                        left: 0,
+                        top: '25%',
+                        bottom: '25%',
+                        width: '4px',
+                        borderRadius: '0 4px 4px 0',
+                        backgroundColor: '#3B82F6',
+                        boxShadow: '0 0 10px #3B82F6',
+                      }
+                    : undefined,
                   '&:hover': {
-                    backgroundColor: active ? '#F1F5F9' : '#F8FAFC',
+                    backgroundColor: active ? 'rgba(59, 130, 246, 0.12)' : 'rgba(255, 255, 255, 0.04)',
+                    color: '#F8FAFC',
+                    '& .MuiListItemIcon-root': {
+                      color: '#3B82F6',
+                    },
                   },
                 }}
               >
@@ -114,8 +118,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
                       height: 20,
                       fontSize: '0.65rem',
                       fontWeight: 600,
-                      backgroundColor: '#E2E8F0',
-                      color: '#475569',
+                      backgroundColor: 'rgba(139, 92, 246, 0.15)',
+                      color: '#A78BFA',
+                      border: 'none',
                     }}
                   />
                 )}
@@ -144,7 +149,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: DRAWER_WIDTH,
-            borderRight: '1px solid #E2E8F0',
+            borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+            backgroundColor: '#030712',
           },
         }}
       >
@@ -160,8 +166,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: DRAWER_WIDTH,
-            borderRight: '1px solid #E2E8F0',
-            backgroundColor: '#FFFFFF',
+            borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+            backgroundColor: 'rgba(3, 7, 18, 0.4)',
+            backdropFilter: 'blur(16px)',
           },
         }}
         open

@@ -33,7 +33,7 @@ public class UserTravelProfileService {
         User user = getAuthenticatedUser();
 
         if (profileRepository.existsByUserId(user.getId())) {
-            throw new IllegalArgumentException("Profile already exists for this user");
+            return updateCurrentUserProfile(request);
         }
 
         UserTravelProfile profile = UserTravelProfile.builder()
@@ -58,8 +58,10 @@ public class UserTravelProfileService {
 
     public UserTravelProfileResponse getCurrentUserProfile() {
         User user = getAuthenticatedUser();
-        UserTravelProfile profile = profileRepository.findByUserId(user.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Profile not found for current user"));
+        UserTravelProfile profile = profileRepository.findByUserId(user.getId()).orElse(null);
+        if (profile == null) {
+            return null;
+        }
         return mapToResponse(profile);
     }
 

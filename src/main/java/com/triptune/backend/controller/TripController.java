@@ -18,6 +18,7 @@ import com.triptune.backend.dto.trip.TripCreateRequest;
 import com.triptune.backend.dto.trip.TripResponse;
 import com.triptune.backend.dto.trip.TripUpdateRequest;
 import com.triptune.backend.service.TripService;
+import com.triptune.backend.service.DestinationRecommendationService;
 
 import jakarta.validation.Valid;
 
@@ -26,9 +27,11 @@ import jakarta.validation.Valid;
 public class TripController {
 
     private final TripService tripService;
+    private final DestinationRecommendationService recommendationService;
 
-    public TripController(TripService tripService) {
+    public TripController(TripService tripService, DestinationRecommendationService recommendationService) {
         this.tripService = tripService;
+        this.recommendationService = recommendationService;
     }
 
     @PostMapping
@@ -74,9 +77,14 @@ public class TripController {
 
     @GetMapping("/{tripId}/destination-recommendations")
     public ResponseEntity<ApiResponse<java.util.List<com.triptune.backend.dto.recommendation.DestinationRecommendationResponse>>> getDestinationRecommendations(
-            @PathVariable Long tripId, 
-            @org.springframework.beans.factory.annotation.Autowired com.triptune.backend.service.DestinationRecommendationService recommendationService) {
+            @PathVariable Long tripId) {
         java.util.List<com.triptune.backend.dto.recommendation.DestinationRecommendationResponse> recommendations = recommendationService.recommendDestinationsForTrip(tripId);
         return ResponseEntity.ok(ApiResponse.success("Recommendations generated successfully", recommendations));
+    }
+
+    @PostMapping("/{tripId}/confirm")
+    public ResponseEntity<ApiResponse<TripResponse>> confirmTrip(@PathVariable Long tripId) {
+        TripResponse response = tripService.confirmTrip(tripId);
+        return ResponseEntity.ok(ApiResponse.success("Trip confirmed successfully", response));
     }
 }

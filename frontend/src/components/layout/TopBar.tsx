@@ -61,10 +61,11 @@ export const TopBar: React.FC<TopBarProps> = ({ onMobileDrawerToggle }) => {
       position="fixed"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: '#FFFFFF',
-        color: '#0F172A',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
-        borderBottom: '1px solid #E2E8F0',
+        backgroundColor: 'rgba(3, 7, 18, 0.75)',
+        color: '#F8FAFC',
+        backdropFilter: 'blur(12px)',
+        boxShadow: 'none',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
@@ -96,13 +97,13 @@ export const TopBar: React.FC<TopBarProps> = ({ onMobileDrawerToggle }) => {
                 bgcolor: 'primary.main',
                 width: 38,
                 height: 38,
-                boxShadow: '0 2px 8px rgba(15, 44, 89, 0.2)',
+                boxShadow: '0 0 15px rgba(59, 130, 246, 0.5)',
               }}
             >
               <TravelExploreIcon sx={{ color: '#FFFFFF', fontSize: 22 }} />
             </Avatar>
-            <Typography variant="h5" color="primary.main" sx={{ fontWeight: 800, letterSpacing: "-0.02em" }}>
-              Trip<span style={{ color: '#FF6B4A' }}>Tune</span>
+            <Typography variant="h5" color="primary.main" sx={{ fontWeight: 800, letterSpacing: "-0.02em", textShadow: '0 0 10px rgba(59, 130, 246, 0.3)' }}>
+              Trip<span style={{ color: '#06B6D4', textShadow: '0 0 10px rgba(6, 182, 212, 0.5)' }}>Tune</span>
             </Typography>
           </Box>
         </Box>
@@ -119,7 +120,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onMobileDrawerToggle }) => {
                 p: 0.5,
                 pr: 1.5,
                 borderRadius: '20px',
-                '&:hover': { backgroundColor: '#F1F5F9' },
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.08)' },
               }}
             >
               <Avatar
@@ -129,13 +130,14 @@ export const TopBar: React.FC<TopBarProps> = ({ onMobileDrawerToggle }) => {
                   height: 36,
                   fontSize: '0.875rem',
                   fontWeight: 700,
+                  boxShadow: '0 0 10px rgba(139, 92, 246, 0.4)',
                 }}
               >
                 {getInitials(user.fullName)}
               </Avatar>
               <Typography
                 variant="body2"
-                sx={{ fontWeight: 600, display: { xs: 'none', sm: 'block' } }}
+                sx={{ fontWeight: 600, display: { xs: 'none', sm: 'block' }, color: '#F8FAFC' }}
               >
                 {user.fullName}
               </Typography>
@@ -153,27 +155,30 @@ export const TopBar: React.FC<TopBarProps> = ({ onMobileDrawerToggle }) => {
                     width: 200,
                     mt: 1.5,
                     borderRadius: 3,
-                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                    backgroundColor: '#0B1329',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3)',
+                    color: '#F8FAFC',
                   },
                 }
               }}
             >
               <Box sx={{ px: 2, py: 1.5 }}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#F8FAFC' }}>
                   {user.fullName}
                 </Typography>
                 <Typography variant="caption" color="text.secondary" noWrap sx={{ display: 'block' }}>
                   {user.email}
                 </Typography>
               </Box>
-              <Divider />
-              <MenuItem onClick={handleProfileClick} sx={{ py: 1.2 }}>
+              <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.08)' }} />
+              <MenuItem onClick={handleProfileClick} sx={{ py: 1.2, '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.05)' } }}>
                 <ListItemIcon>
-                  <PersonOutlineIcon fontSize="small" />
+                  <PersonOutlineIcon fontSize="small" sx={{ color: '#94A3B8' }} />
                 </ListItemIcon>
                 Travel Profile
               </MenuItem>
-              <MenuItem onClick={handleLogout} sx={{ py: 1.2, color: 'error.main' }}>
+              <MenuItem onClick={handleLogout} sx={{ py: 1.2, color: 'error.main', '&:hover': { bgcolor: 'rgba(239, 68, 68, 0.08)' } }}>
                 <ListItemIcon>
                   <LogoutIcon fontSize="small" color="error" />
                 </ListItemIcon>

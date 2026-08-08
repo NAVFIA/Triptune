@@ -1,13 +1,16 @@
 import React from 'react';
-import { Box, Typography, Button, Grid, Card, CardContent, CardActions, Chip, CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Typography, Button, Grid, Card, CardContent, CardActions, CircularProgress } from '@mui/material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { PageHeader } from '../components/common/PageHeader';
 import { ErrorState } from '../components/common/ErrorState';
+import { StatusChip } from '../components/common/StatusChip';
 import { getTripsApi } from '../api/trip';
 
 export const MyTripsPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const filterPlanned = searchParams.get('filter') === 'planned';
 
   const {
     data: tripsData,
@@ -19,13 +22,20 @@ export const MyTripsPage: React.FC = () => {
     queryFn: () => getTripsApi(0, 100),
   });
 
-  const trips = tripsData?.data.content ?? [];
+  const rawTrips = tripsData?.data.content ?? [];
+  const trips = rawTrips.filter((trip) => {
+    if (filterPlanned) {
+      return trip.status === 'CONFIRMED';
+    } else {
+      return trip.status !== 'CONFIRMED';
+    }
+  });
 
   return (
     <Box>
       <PageHeader
-        title="My Trips"
-        subtitle="Manage your upcoming and past trips"
+        title={filterPlanned ? "Planned Trips" : "My Trips"}
+        subtitle={filterPlanned ? "View and access your finalized and confirmed itineraries" : "Manage your upcoming drafts and recommendation plans"}
         action={
           <Button variant="contained" color="primary" onClick={() => navigate('/trips/create')}>
             Plan New Trip
@@ -40,7 +50,9 @@ export const MyTripsPage: React.FC = () => {
         <ErrorState message="Failed to load trips" onRetry={() => refetch()} />
       ) : trips.length === 0 ? (
         <Box sx={{ textAlign: 'center', mt: 4 }}>
-          <Typography variant="h6" color="text.secondary">You haven't planned any trips yet.</Typography>
+          <Typography variant="h6" color="text.secondary">
+            {filterPlanned ? "You haven't confirmed any trips yet." : "You haven't planned any trips yet."}
+          </Typography>
         </Box>
       ) : (
         <Grid container spacing={3} sx={{ mt: 2 }}>
@@ -53,7 +65,7 @@ export const MyTripsPage: React.FC = () => {
                     {trip.startDate} to {trip.endDate}
                   </Typography>
                   <Box sx={{ mt: 2, mb: 1 }}>
-                    <Chip label={trip.status} color="primary" size="small" />
+                    <StatusChip status={trip.status} />
                   </Box>
                   <Typography variant="body2">
                     Budget: ${trip.perPersonBudget ?? trip.totalBudget} per person
