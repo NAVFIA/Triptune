@@ -17,7 +17,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { apiClient } from '../api/client';
 import { useAuth } from '../hooks/useAuth';
 
 interface Message {
@@ -73,7 +73,8 @@ export const AIAssistantPage: React.FC = () => {
 
     try {
       // Query our local Java NLP controller gateway
-      const response = await axios.post('/api/nlp/chat', {
+      const url = apiClient.defaults.baseURL ? apiClient.defaults.baseURL.replace('/v1', '/nlp/chat') : '/api/nlp/chat';
+      const response = await apiClient.post(url, {
         message: userMessage.text,
       });
 

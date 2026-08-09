@@ -108,8 +108,13 @@ public class TripService {
         trip.setTravelPace(request.getTravelPace());
         trip.setMoods(request.getMoods() != null ? new java.util.HashSet<>(request.getMoods()) : null);
         trip.setInterests(request.getInterests() != null ? new java.util.HashSet<>(request.getInterests()) : null);
-        trip.setPerPersonBudget(request.getPerPersonBudget());
-        trip.setTotalBudget(request.getPerPersonBudget().multiply(BigDecimal.valueOf(request.getNumberOfTravellers())));
+        BigDecimal perPerson = request.getPerPersonBudget() != null ? request.getPerPersonBudget() : trip.getPerPersonBudget();
+        Integer numTravellers = request.getNumberOfTravellers() != null ? request.getNumberOfTravellers() : trip.getNumberOfTravellers();
+        if (numTravellers == null) numTravellers = 1;
+        trip.setPerPersonBudget(perPerson);
+        if (perPerson != null) {
+            trip.setTotalBudget(perPerson.multiply(BigDecimal.valueOf(numTravellers)));
+        }
         trip.setPreferredTransport(request.getPreferredTransport());
         trip.setMaximumTravelDistance(request.getMaximumTravelDistance());
         trip.setDietaryPreferences(request.getDietaryPreferences());

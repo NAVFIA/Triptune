@@ -94,7 +94,8 @@ public class ItineraryService {
 
                 if (bestChoice != null) {
                     usedIds.add(bestChoice.getId());
-                    totalCost += bestChoice.getEstimatedCost() * trip.getNumberOfTravellers();
+                    int numTravellers = trip.getNumberOfTravellers() != null ? trip.getNumberOfTravellers() : 1;
+                    totalCost += bestChoice.getEstimatedCost() * numTravellers;
 
                     dayActivities.add(ItineraryActivityResponse.builder()
                             .id(bestChoice.getId())
@@ -143,7 +144,7 @@ public class ItineraryService {
 
     private List<Activity> filterActivities(Trip trip, List<Activity> activities) {
         String avoidText = trip.getActivitiesToAvoid() != null ? trip.getActivitiesToAvoid().toLowerCase() : "";
-        boolean hasElderlyOrAccessibility = trip.getNumberOfElderly() > 0 
+        boolean hasElderlyOrAccessibility = (trip.getNumberOfElderly() != null && trip.getNumberOfElderly() > 0) 
                 || (trip.getAccessibilityRequirements() != null && !trip.getAccessibilityRequirements().trim().isEmpty());
 
         return activities.stream()
@@ -232,7 +233,8 @@ public class ItineraryService {
             }
             
             // Check budget constraints
-            double estimatedCost = act.getEstimatedCost() * trip.getNumberOfTravellers();
+            int numTravellers = trip.getNumberOfTravellers() != null ? trip.getNumberOfTravellers() : 1;
+            double estimatedCost = act.getEstimatedCost() * numTravellers;
             if (estimatedCost <= remainingBudget) {
                 return act;
             }

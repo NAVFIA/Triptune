@@ -24,7 +24,7 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
       removeToken();
       if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
         window.location.href = '/login';

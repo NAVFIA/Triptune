@@ -486,7 +486,7 @@ public class DestinationRecommendationService {
         String desc = dest.getDescription() != null ? dest.getDescription().toLowerCase() : "";
         double baseline = 70.0;
 
-        if (type == TravellerType.FAMILY || type == TravellerType.PARENTS_WITH_CHILDREN || trip.getNumberOfChildren() > 0) {
+        if (type == TravellerType.FAMILY || type == TravellerType.PARENTS_WITH_CHILDREN || (trip.getNumberOfChildren() != null && trip.getNumberOfChildren() > 0)) {
             if (desc.contains("family") || desc.contains("kids") || desc.contains("safe") || desc.contains("playground")) {
                 baseline = 90.0;
             } else {
@@ -500,7 +500,7 @@ public class DestinationRecommendationService {
             }
         }
 
-        if (trip.getNumberOfElderly() > 0 || (trip.getAccessibilityRequirements() != null && !trip.getAccessibilityRequirements().trim().isEmpty())) {
+        if ((trip.getNumberOfElderly() != null && trip.getNumberOfElderly() > 0) || (trip.getAccessibilityRequirements() != null && !trip.getAccessibilityRequirements().trim().isEmpty())) {
             if (desc.contains("accessible") || desc.contains("elevator") || desc.contains("easy") || desc.contains("flat")) {
                 baseline = Math.min(100.0, baseline + 10.0);
             } else {

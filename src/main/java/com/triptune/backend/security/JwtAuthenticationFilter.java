@@ -60,10 +60,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (io.jsonwebtoken.ExpiredJwtException e) {
             logger.warn("JWT token has expired: " + e.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\":false,\"message\":\"JWT token has expired\",\"data\":null}");
+            return;
         } catch (io.jsonwebtoken.JwtException e) {
             logger.warn("JWT token is invalid: " + e.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\":false,\"message\":\"JWT token is invalid\",\"data\":null}");
+            return;
         } catch (Exception e) {
             logger.error("Authentication error occurred: " + e.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\":false,\"message\":\"Authentication error occurred\",\"data\":null}");
+            return;
         }
 
         filterChain.doFilter(request, response);
