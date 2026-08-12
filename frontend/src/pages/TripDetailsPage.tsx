@@ -801,6 +801,7 @@ export const TripDetailsPage: React.FC = () => {
                 variant="outlined"
                 color="primary"
                 fullWidth
+                type="button"
                 onClick={() => fileInputRef.current?.click()}
               >
                 Choose Local Image File
@@ -884,7 +885,7 @@ export const TripDetailsPage: React.FC = () => {
             </Stack>
           </DialogContent>
           <DialogActions sx={{ p: 2, pt: 0 }}>
-            <Button onClick={() => setPhotoDialogOpen(false)} color="secondary">Cancel</Button>
+            <Button onClick={() => setPhotoDialogOpen(false)} color="secondary" type="button">Cancel</Button>
             <Button type="submit" variant="contained" color="primary">Share Photo</Button>
           </DialogActions>
         </form>
@@ -918,7 +919,7 @@ export const TripDetailsPage: React.FC = () => {
             </Stack>
           </DialogContent>
           <DialogActions sx={{ p: 2, pt: 0 }}>
-            <Button onClick={() => setExpenseDialogOpen(false)} color="secondary">Cancel</Button>
+            <Button onClick={() => setExpenseDialogOpen(false)} color="secondary" type="button">Cancel</Button>
             <Button type="submit" variant="contained" color="primary">Log Expense</Button>
           </DialogActions>
         </form>

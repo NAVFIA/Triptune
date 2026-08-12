@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import com.triptune.backend.entity.UserInteraction;
 import com.triptune.backend.repository.UserInteractionRepository;
 
@@ -16,13 +17,23 @@ import lombok.extern.slf4j.Slf4j;
 public class CsvDatasetLoader implements CommandLineRunner {
 
     private final UserInteractionRepository userInteractionRepository;
+    private final JdbcTemplate jdbcTemplate;
 
-    public CsvDatasetLoader(UserInteractionRepository userInteractionRepository) {
+    public CsvDatasetLoader(UserInteractionRepository userInteractionRepository, JdbcTemplate jdbcTemplate) {
         this.userInteractionRepository = userInteractionRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        try {
+            log.info("Altering trip_photos column type to TEXT...");
+            jdbcTemplate.execute("ALTER TABLE trip_photos ALTER COLUMN image_url TYPE TEXT;");
+            log.info("Altered trip_photos column successfully.");
+        } catch (Exception e) {
+            log.warn("Could not alter column type: {}", e.getMessage());
+        }
+
         long count = userInteractionRepository.count();
         if (count > 0) {
             log.info("user_interactions database table already initialized with {} records. Skipping CSV loading.", count);
