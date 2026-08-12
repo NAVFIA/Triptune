@@ -68,7 +68,7 @@ export const MyTripsPage: React.FC = () => {
                     <StatusChip status={trip.status} />
                   </Box>
                   <Typography variant="body2">
-                    Budget: ${trip.perPersonBudget ?? trip.totalBudget} per person
+                    Budget: ₹{trip.perPersonBudget ?? trip.totalBudget} per person
                   </Typography>
                   <Typography variant="body2">Traveller Type: {trip.travellerType}</Typography>
                   {trip.selectedDestination && (

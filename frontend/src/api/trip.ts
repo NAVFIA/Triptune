@@ -68,3 +68,38 @@ export const getDestinationsApi = async (): Promise<ApiResponse<SelectedDestinat
   const response = await apiClient.get<ApiResponse<SelectedDestinationSummary[]>>('/destinations');
   return response.data;
 };
+
+export const inviteMemberApi = async (tripId: number, email: string): Promise<ApiResponse<void>> => {
+  const response = await apiClient.post<ApiResponse<void>>(`/trips/${tripId}/members`, { email });
+  return response.data;
+};
+
+export const getMembersApi = async (tripId: number): Promise<ApiResponse<string[]>> => {
+  const response = await apiClient.get<ApiResponse<string[]>>(`/trips/${tripId}/members`);
+  return response.data;
+};
+
+export const uploadPhotoApi = async (tripId: number, data: { imageUrl: string; caption?: string; dayNumber: number; activityName: string }): Promise<ApiResponse<any>> => {
+  const response = await apiClient.post<ApiResponse<any>>(`/trips/${tripId}/photos`, data);
+  return response.data;
+};
+
+export const getPhotosApi = async (tripId: number): Promise<ApiResponse<any[]>> => {
+  const response = await apiClient.get<ApiResponse<any[]>>(`/trips/${tripId}/photos`);
+  return response.data;
+};
+
+export const addExpenseApi = async (tripId: number, data: { amount: number; description: string }): Promise<ApiResponse<any>> => {
+  const response = await apiClient.post<ApiResponse<any>>(`/trips/${tripId}/expenses`, data);
+  return response.data;
+};
+
+export const getExpensesApi = async (tripId: number): Promise<ApiResponse<any[]>> => {
+  const response = await apiClient.get<ApiResponse<any[]>>(`/trips/${tripId}/expenses`);
+  return response.data;
+};
+
+export const getSplitsApi = async (tripId: number): Promise<ApiResponse<any[]>> => {
+  const response = await apiClient.get<ApiResponse<any[]>>(`/trips/${tripId}/expenses/splits`);
+  return response.data;
+};

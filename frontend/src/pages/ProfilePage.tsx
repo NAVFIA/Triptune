@@ -209,7 +209,7 @@ export const ProfilePage: React.FC = () => {
                       Total Budget Invested
                     </Typography>
                     <Typography variant="h5" sx={{ fontWeight: 800, color: 'success.main' }}>
-                      ${confirmedTrips.reduce((acc, t) => acc + (t.totalBudget || 0), 0)}
+                      ₹{confirmedTrips.reduce((acc, t) => acc + (t.totalBudget || 0), 0)}
                     </Typography>
                   </Box>
 

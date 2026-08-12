@@ -18,6 +18,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
@@ -178,6 +180,15 @@ public class Trip {
     @Column(nullable = false, length = 30)
     @Builder.Default
     private TripStatus status = TripStatus.DRAFT;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "trip_members",
+        joinColumns = @JoinColumn(name = "trip_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @Builder.Default
+    private Set<User> members = new java.util.HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "trip_rejected_activities", joinColumns = @JoinColumn(name = "trip_id"))

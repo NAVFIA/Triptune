@@ -217,7 +217,7 @@ export const DashboardPage: React.FC = () => {
                   >
                     {trip.perPersonBudget && (
                       <Typography variant="subtitle2" color="primary.main" sx={{ fontWeight: 700 }}>
-                        ${trip.perPersonBudget} / person
+                        ₹{trip.perPersonBudget} / person
                       </Typography>
                     )}
                     <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>

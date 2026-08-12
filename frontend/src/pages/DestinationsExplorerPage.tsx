@@ -557,7 +557,7 @@ export const DestinationsExplorerPage: React.FC = () => {
                   {selectedForCompare.map((dest) => (
                     <TableCell key={dest.id} align="center" sx={{ borderRight: '1px solid', borderColor: 'divider' }}>
                       <Typography variant="body2" sx={{ fontWeight: 800, color: 'success.main' }}>
-                        ${dest.averageDailyCost} / day
+                        ₹{dest.averageDailyCost} / day
                       </Typography>
                     </TableCell>
                   ))}
