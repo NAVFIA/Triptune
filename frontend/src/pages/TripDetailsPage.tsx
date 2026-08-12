@@ -135,6 +135,7 @@ export const TripDetailsPage: React.FC = () => {
   const [photoCaption, setPhotoCaption] = useState('');
   const [photoDay, setPhotoDay] = useState(1);
   const [photoActivity, setPhotoActivity] = useState('');
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   // Log Expense Dialog State
   const [expenseDialogOpen, setExpenseDialogOpen] = useState(false);
@@ -240,7 +241,23 @@ export const TripDetailsPage: React.FC = () => {
 
   const handleUploadPhoto = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!tripId || !photoUrl.trim() || !photoActivity.trim()) return;
+    setError('');
+    setSuccessMsg('');
+    console.log("Submitting photo upload...", { tripId, hasUrl: !!photoUrl, photoActivity });
+
+    if (!tripId) {
+      setError('Trip ID is missing.');
+      return;
+    }
+    if (!photoUrl || !photoUrl.trim()) {
+      setError('Please select a local image file or paste a photo URL.');
+      return;
+    }
+    if (!photoActivity || !photoActivity.trim()) {
+      setError('Please select a place or activity from the dropdown.');
+      return;
+    }
+
     try {
       await uploadPhotoApi(Number(tripId), {
         imageUrl: photoUrl.trim(),
@@ -254,6 +271,7 @@ export const TripDetailsPage: React.FC = () => {
       setSuccessMsg('Photo shared successfully!');
       fetchPhotos();
     } catch (err: any) {
+      console.error("Photo upload failed:", err);
       setError(err.response?.data?.message || 'Failed to upload photo.');
     }
   };
@@ -775,35 +793,36 @@ export const TripDetailsPage: React.FC = () => {
                 value={photoUrl.startsWith('data:image') ? 'Local File Selected' : photoUrl}
                 onChange={(e) => setPhotoUrl(e.target.value)}
                 placeholder="https://example.com/sunset.jpg"
-                required
+                required={!photoUrl}
                 fullWidth
               />
 
               <Button
                 variant="outlined"
-                component="label"
                 color="primary"
                 fullWidth
+                onClick={() => fileInputRef.current?.click()}
               >
                 Choose Local Image File
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        if (typeof reader.result === 'string') {
-                          setPhotoUrl(reader.result);
-                        }
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  }}
-                />
               </Button>
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      if (typeof reader.result === 'string') {
+                        setPhotoUrl(reader.result);
+                      }
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }}
+              />
 
               {photoUrl && photoUrl.startsWith('data:image') && (
                 <Box sx={{ mt: 1, textAlign: 'center' }}>
