@@ -178,8 +178,8 @@ public class CsvIndianDestinationSeeder implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        if (destinationRepository.count() > 0) {
-            log.info("Destinations table is already seeded. Skipping CsvIndianDestinationSeeder.");
+        if (destinationRepository.existsByName("Delhi")) {
+            log.info("Destinations table is already seeded with Indian destinations. Skipping CsvIndianDestinationSeeder.");
             return;
         }
 
@@ -220,13 +220,13 @@ public class CsvIndianDestinationSeeder implements CommandLineRunner {
                     rating = Double.parseDouble(cleanQuotes(values[2]).trim());
                 } catch (NumberFormatException ignored) {}
 
-                double avgDailyCost = 35.0;
+                double avgDailyCost = 35.0 * 80.0;
                 if (rating > 4.7) {
-                    avgDailyCost = 65.0;
+                    avgDailyCost = 65.0 * 80.0;
                 } else if (rating > 4.5) {
-                    avgDailyCost = 50.0;
+                    avgDailyCost = 50.0 * 80.0;
                 } else if (rating < 4.3) {
-                    avgDailyCost = 25.0;
+                    avgDailyCost = 25.0 * 80.0;
                 }
 
                 String description = cleanQuotes(values[3]);
@@ -441,7 +441,7 @@ public class CsvIndianDestinationSeeder implements CommandLineRunner {
                 .name(city + " Cultural Heritage & Sightseeing Tour")
                 .description("Explore historical monuments, landmarks, and learn about the local traditions and heritage of " + city + ".")
                 .durationMinutes(180)
-                .estimatedCost(15.0)
+                .estimatedCost(15.0 * 80.0)
                 .openingTime("09:00")
                 .closingTime("17:00")
                 .energyLevel("MEDIUM")
@@ -477,7 +477,7 @@ public class CsvIndianDestinationSeeder implements CommandLineRunner {
                 .name(city + " Traditional Food Walk & Tasting")
                 .description("Taste the famous street foods, regional delicacies, and authentic cooking of " + city + ".")
                 .durationMinutes(90)
-                .estimatedCost(20.0)
+                .estimatedCost(20.0 * 80.0)
                 .openingTime("12:00")
                 .closingTime("21:00")
                 .energyLevel("LOW")
@@ -495,7 +495,7 @@ public class CsvIndianDestinationSeeder implements CommandLineRunner {
                 .name(city + " Outdoor Adventure Excursion")
                 .description("Engage in a high-energy hike or adventure activity showcasing the natural and active highlights of " + city + ".")
                 .durationMinutes(150)
-                .estimatedCost(35.0)
+                .estimatedCost(35.0 * 80.0)
                 .openingTime("08:00")
                 .closingTime("16:00")
                 .energyLevel("HIGH")

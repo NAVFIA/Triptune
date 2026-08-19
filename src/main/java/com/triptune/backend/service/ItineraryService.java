@@ -75,7 +75,10 @@ public class ItineraryService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
         Set<Long> usedIds = new HashSet<>();
-        double totalCost = 0.0;
+        int numTravellers = trip.getNumberOfTravellers() != null ? trip.getNumberOfTravellers() : 1;
+        double dailyCost = (destination.getAverageDailyCost() != null ? destination.getAverageDailyCost() : 0.0) 
+                * trip.getNumberOfDays() * numTravellers;
+        double totalCost = dailyCost;
 
         int numActivitiesPerDay = getActivitiesCountPerDay(trip.getTravelPace());
         List<String> timeSlots = getTimeSlots(numActivitiesPerDay);
@@ -94,7 +97,6 @@ public class ItineraryService {
 
                 if (bestChoice != null) {
                     usedIds.add(bestChoice.getId());
-                    int numTravellers = trip.getNumberOfTravellers() != null ? trip.getNumberOfTravellers() : 1;
                     totalCost += bestChoice.getEstimatedCost() * numTravellers;
 
                     dayActivities.add(ItineraryActivityResponse.builder()
@@ -226,6 +228,7 @@ public class ItineraryService {
         BigDecimal maxBudget = trip.getTotalBudget();
         double remainingBudget = maxBudget != null ? maxBudget.doubleValue() - totalCost : Double.MAX_VALUE;
 
+        // Try to find one that fits the remaining budget first
         for (ScoredActivity scored : scoredPool) {
             Activity act = scored.getActivity();
             if (usedIds.contains(act.getId())) {
@@ -233,12 +236,21 @@ public class ItineraryService {
             }
             
             // Check budget constraints
-            int numTravellers = trip.getNumberOfTravellers() != null ? trip.getNumberOfTravellers() : 1;
+            int numTravellers = trip.getNumberOfTravellers() != null ? trip.getNumberOfTravellers() : 1;
             double estimatedCost = act.getEstimatedCost() * numTravellers;
             if (estimatedCost <= remainingBudget) {
                 return act;
             }
         }
+
+        // Fallback: If nothing fits the remaining budget, return the highest scored unused activity regardless of budget
+        for (ScoredActivity scored : scoredPool) {
+            Activity act = scored.getActivity();
+            if (!usedIds.contains(act.getId())) {
+                return act;
+            }
+        }
+
         return null;
     }
 
